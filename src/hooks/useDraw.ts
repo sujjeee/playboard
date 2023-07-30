@@ -10,6 +10,16 @@ export default function useDraw(onDraw: ({ ctx, currentPoint, prevPoint }: Draw)
         setMouseDown(true)
     }
 
+    function clear() {
+        const canvas = canvasRef.current;
+        if (!canvas) return
+
+        const ctx = canvas.getContext('2d')
+        if (!ctx) return
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+    }
+
     React.useEffect(() => {
         function startDrawing(e: MouseEvent) {
 
@@ -19,7 +29,7 @@ export default function useDraw(onDraw: ({ ctx, currentPoint, prevPoint }: Draw)
             const currentPoint = computePointInCanvas(e)
 
             if (!ctx || !currentPoint) return
-            console.log(ctx)
+
             onDraw({ ctx, currentPoint, prevPoint: prevPoint.current })
             prevPoint.current = currentPoint
         }
@@ -43,17 +53,17 @@ export default function useDraw(onDraw: ({ ctx, currentPoint, prevPoint }: Draw)
         // window.addEventListener('mousemove', startDrawing);
         canvasRef.current?.addEventListener('mousemove', startDrawing);
         window.addEventListener("mouseup", mouseUpHandler)
-        canvasRef.current?.addEventListener('mousedown', startDrawing);
+        window.addEventListener('mousedown', startDrawing);
 
 
         return () => {
             // window.removeEventListener('mousemove', startDrawing);
             canvasRef.current?.removeEventListener('mousemove', startDrawing);
             window.removeEventListener("mouseup", mouseUpHandler)
-            canvasRef.current?.removeEventListener('mousedown', startDrawing);
+            window.removeEventListener('mousedown', startDrawing);
         };
 
     }, [onDraw])
 
-    return { canvasRef, onMouseDown }
+    return { canvasRef, onMouseDown, clear }
 }
