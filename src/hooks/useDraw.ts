@@ -1,17 +1,21 @@
 import React from 'react'
 
 export default function useDraw(onDraw: ({ ctx, currentPoint, prevPoint }: Draw) => void) {
-    const [mouseDown, setMouseDown] = React.useState(false)
 
     const canvasRef = React.useRef<HTMLCanvasElement>(null)
     const prevPoint = React.useRef<null | Point>(null)
+
+    const [mouseDown, setMouseDown] = React.useState(false)
+
+
+    const canvas = canvasRef.current;
 
     function onMouseDown() {
         setMouseDown(true)
     }
 
     function clear() {
-        const canvas = canvasRef.current;
+
         if (!canvas) return
 
         const ctx = canvas.getContext('2d')
@@ -35,7 +39,6 @@ export default function useDraw(onDraw: ({ ctx, currentPoint, prevPoint }: Draw)
         }
 
         const computePointInCanvas = (e: MouseEvent) => {
-            const canvas = canvasRef.current
             if (!canvas) return
 
             const rect = canvas.getBoundingClientRect()
@@ -51,19 +54,19 @@ export default function useDraw(onDraw: ({ ctx, currentPoint, prevPoint }: Draw)
         }
 
         // window.addEventListener('mousemove', startDrawing);
-        canvasRef.current?.addEventListener('mousemove', startDrawing);
+        canvas?.addEventListener('mousemove', startDrawing);
         window.addEventListener("mouseup", mouseUpHandler)
         window.addEventListener('mousedown', startDrawing);
 
 
         return () => {
             // window.removeEventListener('mousemove', startDrawing);
-            canvasRef.current?.removeEventListener('mousemove', startDrawing);
+            canvas?.removeEventListener('mousemove', startDrawing);
             window.removeEventListener("mouseup", mouseUpHandler)
             window.removeEventListener('mousedown', startDrawing);
         };
 
-    }, [onDraw])
+    }, [onDraw]) // eslint-disable-line react-hooks/exhaustive-deps
 
     return { canvasRef, onMouseDown, clear }
 }
