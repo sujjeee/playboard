@@ -1,5 +1,5 @@
 import React from 'react'
-import { ThemeToggle } from "@/components/layouts/theme-toggle"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Camera, Eraser } from "lucide-react"
