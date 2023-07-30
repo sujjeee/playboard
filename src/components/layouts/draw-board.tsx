@@ -1,10 +1,12 @@
 'use client'
 
 import useDraw from "@/hooks/useDraw"
+import useWindowSize from "@/hooks/useWindowSize"
 import React from "react"
 
 
 export default function DrawingBoard() {
+    const { windowSize } = useWindowSize()
 
     const { canvasRef, onMouseDown } = useDraw(drawLine)
 
@@ -27,30 +29,15 @@ export default function DrawingBoard() {
         ctx.fill()
     }
 
-    React.useEffect(() => {
-        const canvas = canvasRef.current;
-
-        function handleResize() {
-            if (canvas) {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
-        };
-
-        window.addEventListener('resize', handleResize);
-
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
-
-    return (
-        <canvas
-            width={window.innerWidth}
-            height={window.innerHeight}
-            ref={canvasRef}
-            onMouseDown={onMouseDown}
-            className="cursor-pointer"
-        />
-    )
+    if (windowSize.height && windowSize.width !== undefined) {
+        return (
+            <canvas
+                width={windowSize.width}
+                height={windowSize.height}
+                ref={canvasRef}
+                onMouseDown={onMouseDown}
+                className="cursor-pointer"
+            />
+        )
+    }
 }
