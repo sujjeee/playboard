@@ -32,6 +32,7 @@ export default function DrawingBoard() {
     if (windowSize.height && windowSize.width !== undefined) {
         return (
             <canvas
+                id="canvas"
                 width={windowSize.width}
                 height={windowSize.height}
                 ref={canvasRef}

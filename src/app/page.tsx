@@ -1,25 +1,20 @@
-
+import ClearCanvasButton from "@/components/clear-canvas"
 import DrawingBoard from "@/components/layouts/draw-board"
+import TakeScreenShotButton from "@/components/take-screenshot"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { Camera, Eraser } from "lucide-react"
 
 export default function Home() {
   return (
     <>
-      <div className="absolute top-5 w-full px-12 ">
+      <div className="absolute top-5 w-full md:px-12 px-4">
         <div className=" flex justify-between items-center">
-          <Card className="px-5 py-2 tracking-wide font-semibold rounded-md select-none">
+          <Card className="px-4 py-2 tracking-wide font-medium rounded-md select-none text-sm">
             PlayBoard
           </Card>
           <div className="items-center flex gap-3">
-            <Button variant="outline" size="icon">
-              <Eraser className="h-4 w-4" />
-            </Button>
-            <Button variant="outline" size="icon">
-              <Camera className="h-4 w-4" />
-            </Button>
+            <ClearCanvasButton />
+            <TakeScreenShotButton />
             <ThemeToggle />
           </div>
         </div>
