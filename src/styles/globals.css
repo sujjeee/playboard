@@ -76,4 +76,7 @@
     @apply bg-background text-foreground;
     overflow: hidden
   }
+  canvas {
+    touch-action: none;
+  }
 }
