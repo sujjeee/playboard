@@ -17,6 +17,7 @@ export default function ClearCanvasButton() {
     }, [windowSize])
 
     function handleClear() {
+        console.log("clicked")
         if (!canvasRef.current) return;
         const ctx = canvasRef.current.getContext('2d')
         if (!ctx) return
