@@ -8,7 +8,7 @@ import React from "react"
 export default function DrawingBoard() {
     const { windowSize } = useWindowSize()
 
-    const { canvasRef, onMouseDown } = useDraw(drawLine)
+    const { canvasRef, onInteractStart } = useDraw(drawLine)
 
     function drawLine({ prevPoint, currentPoint, ctx }: Draw) {
         const { x: currX, y: currY } = currentPoint
@@ -29,6 +29,12 @@ export default function DrawingBoard() {
         ctx.fill()
     }
 
+    const handleInteractStart = () => {
+        const canvasElement = canvasRef.current
+        if (!canvasElement) return
+        onInteractStart()
+    }
+
     if (windowSize.height && windowSize.width !== undefined) {
         return (
             <canvas
@@ -36,7 +42,8 @@ export default function DrawingBoard() {
                 width={windowSize.width}
                 height={windowSize.height}
                 ref={canvasRef}
-                onMouseDown={onMouseDown}
+                onMouseDown={handleInteractStart}
+                onTouchStart={handleInteractStart}
                 className="cursor-pointer"
             />
         )
