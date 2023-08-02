@@ -8,7 +8,7 @@ export default function useDraw(onDraw: ({ ctx, currentPoint, prevPoint }: Draw)
 
     const canvas = canvasRef.current;
 
-    function onMouseDown() {
+    function onInteractStart() {
         setIsDrawing(true);
     }
 
@@ -64,5 +64,5 @@ export default function useDraw(onDraw: ({ ctx, currentPoint, prevPoint }: Draw)
         };
     }, [isDrawing, onDraw]);
 
-    return { canvasRef, onMouseDown };
+    return { canvasRef, onInteractStart };
 }
