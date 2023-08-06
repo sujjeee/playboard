@@ -1,8 +1,8 @@
 import React from 'react'
-import { ThemeToggle } from "@/components/theme-toggle"
 import { Card } from "@/components/ui/card"
-import ClearCanvasButton from '../clear-canvas'
-import TakeScreenShotButton from '../take-screenshot'
+import { ToolSettings } from '../tools/tool-settings'
+import ClearCanvasButton from '@/components/tools/clear-canvas'
+import TakeScreenShotButton from '@/components/tools/take-screenshot'
 
 export default function DrawBoardHeader() {
     return (
@@ -14,7 +14,7 @@ export default function DrawBoardHeader() {
                 <div className="items-center flex gap-3">
                     <ClearCanvasButton />
                     <TakeScreenShotButton />
-                    <ThemeToggle />
+                    <ToolSettings />
                 </div>
             </div>
             <div>
