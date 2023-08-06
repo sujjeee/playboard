@@ -2,6 +2,7 @@
 
 import useDraw from "@/hooks/useDraw"
 import useWindowSize from "@/hooks/useWindowSize"
+import { useCanvasStore } from "@/lib/store/canvas.store"
 import React from "react"
 
 
@@ -9,13 +10,16 @@ export default function DrawingBoard() {
     const { windowSize } = useWindowSize()
 
     const { canvasRef, onInteractStart } = useDraw(drawLine)
+    const color = useCanvasStore(state => state.strokeColor)
+
+    const newlineWidth = useCanvasStore(state => state.lineWidth)
 
     function drawLine({ prevPoint, currentPoint, ctx }: Draw) {
         const { x: currX, y: currY } = currentPoint
         let startPoint = prevPoint ?? currentPoint
 
-        const lineColor = 'yellow'
-        const lineWidth = 10
+        const lineColor = color
+        const lineWidth = newlineWidth
 
         ctx.lineJoin = 'round'
         ctx.lineCap = 'round'

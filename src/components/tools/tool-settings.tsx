@@ -8,8 +8,9 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 import { SlidersHorizontal } from 'lucide-react';
-import { LineWidthSelector } from "./linewidth-selector";
+import { LineWidthSelector } from "@/components/tools/linewidth-selector";
 import { Switch } from "@/components/ui/switch";
+import ColorPicker from "@/components/tools/color-picker";
 import { useTheme } from "next-themes"
 
 export function ToolSettings() {
@@ -30,10 +31,11 @@ export function ToolSettings() {
                         </p>
                     </div>
                     <div className="grid gap-6">
-                        <LineWidthSelector defaultValue={[0.56]} />
-                        <div className="flex items-center justify-between space-x-2">
+                        <LineWidthSelector />
+                        <ColorPicker />
+                        <div className="flex items-center justify-between ">
                             <Label htmlFor="necessary" className="flex flex-col space-y-1">
-                                <span>Dark Mode</span>
+                                <span>Canvas Theme</span>
 
                             </Label>
                             <Switch
