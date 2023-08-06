@@ -1,10 +1,15 @@
+"use client"
+
 import React from 'react'
-import { ThemeToggle } from "@/components/theme-toggle"
 import { Card } from "@/components/ui/card"
-import ClearCanvasButton from '../clear-canvas'
-import TakeScreenShotButton from '../take-screenshot'
+import { ToolSettings } from '@/components/tools/tool-settings'
+import ClearCanvasButton from '@/components/tools/clear-canvas'
+import TakeScreenShotButton from '@/components/tools/take-screenshot'
+import { MobileToolSettings } from '@/components/tools/mobile-tool-settings'
+import useWindowSize from '@/hooks/useWindowSize'
 
 export default function DrawBoardHeader() {
+    const { isMobile, isDesktop } = useWindowSize();
     return (
         <div className="absolute top-5 w-full md:px-12 px-4">
             <div className=" flex justify-between items-center">
@@ -14,7 +19,8 @@ export default function DrawBoardHeader() {
                 <div className="items-center flex gap-3">
                     <ClearCanvasButton />
                     <TakeScreenShotButton />
-                    <ThemeToggle />
+                    {isDesktop && <ToolSettings />}
+                    {isMobile && <MobileToolSettings />}
                 </div>
             </div>
             <div>

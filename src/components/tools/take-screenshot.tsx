@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { Camera } from 'lucide-react'
-import { Button } from './ui/button'
+import { Button } from '@/components/ui/button'
 import useWindowSize from '@/hooks/useWindowSize'
 
 export default function TakeScreenShotButton() {
