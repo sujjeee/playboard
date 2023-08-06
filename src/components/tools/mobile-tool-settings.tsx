@@ -13,7 +13,7 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet"
 import { SlidersHorizontal } from "lucide-react"
-import { LineWidthSelector } from "./linewidth-selector"
+import { LineWidthSelector } from "@/components/tools/linewidth-selector"
 import ColorPicker from "@/components/tools/color-picker"
 import { Switch } from "@/components/ui/switch";
 import { useTheme } from "next-themes"
@@ -52,8 +52,8 @@ export function MobileToolSettings() {
                         </Label>
                         <Switch
                             id="necessary"
-                            defaultChecked
-                            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+                            checked={theme === "dark"}
+                            onCheckedChange={() => setTheme(theme === "light" ? "dark" : "light")}
                         />
                     </div>
                 </div>

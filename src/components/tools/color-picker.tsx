@@ -1,9 +1,9 @@
 'use client'
 
 import React from 'react'
+import { HexAlphaColorPicker } from 'react-colorful'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
-import { HexAlphaColorPicker } from 'react-colorful'
 import {
     Popover,
     PopoverContent,
