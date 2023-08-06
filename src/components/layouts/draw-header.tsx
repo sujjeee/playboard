@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card"
 import { ToolSettings } from '../tools/tool-settings'
 import ClearCanvasButton from '@/components/tools/clear-canvas'
 import TakeScreenShotButton from '@/components/tools/take-screenshot'
+import { MobileToolSettings } from '../tools/mobile-tool-settings'
 
 export default function DrawBoardHeader() {
     return (
@@ -15,6 +16,8 @@ export default function DrawBoardHeader() {
                     <ClearCanvasButton />
                     <TakeScreenShotButton />
                     <ToolSettings />
+                    {/* under development */}
+                    {/* <MobileToolSettings /> */}
                 </div>
             </div>
             <div>

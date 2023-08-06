@@ -3,7 +3,7 @@
 import React from 'react'
 import useWindowSize from '@/hooks/useWindowSize'
 import { Eraser } from 'lucide-react'
-import { Button } from '../ui/button'
+import { Button } from '@/components/ui/button'
 
 export default function ClearCanvasButton() {
 
