@@ -3,7 +3,7 @@
 import React from 'react'
 import useWindowSize from '@/hooks/useWindowSize'
 import { Eraser } from 'lucide-react'
-import { Button } from './ui/button'
+import { Button } from '../ui/button'
 
 export default function ClearCanvasButton() {
 
@@ -17,7 +17,6 @@ export default function ClearCanvasButton() {
     }, [windowSize])
 
     function handleClear() {
-        console.log("clicked")
         if (!canvasRef.current) return;
         const ctx = canvasRef.current.getContext('2d')
         if (!ctx) return
