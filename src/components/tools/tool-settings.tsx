@@ -36,17 +36,14 @@ export function ToolSettings() {
                         <div className="flex items-center justify-between ">
                             <Label htmlFor="necessary" className="flex flex-col space-y-1">
                                 <span>Canvas Theme</span>
-
                             </Label>
                             <Switch
                                 id="necessary"
-                                defaultChecked
-                                onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+                                checked={theme === "dark"}
+                                onCheckedChange={() => setTheme(theme === "light" ? "dark" : "light")}
                             />
                         </div>
                     </div>
-
-
                 </div>
             </PopoverContent>
         </Popover>

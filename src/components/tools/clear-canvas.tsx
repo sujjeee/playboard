@@ -1,8 +1,8 @@
 'use client'
 
 import React from 'react'
-import useWindowSize from '@/hooks/useWindowSize'
 import { Eraser } from 'lucide-react'
+import useWindowSize from '@/hooks/useWindowSize'
 import { Button } from '@/components/ui/button'
 
 export default function ClearCanvasButton() {

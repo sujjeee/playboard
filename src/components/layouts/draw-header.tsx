@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { Card } from "@/components/ui/card"
-import { ToolSettings } from '../tools/tool-settings'
+import { ToolSettings } from '@/components/tools/tool-settings'
 import ClearCanvasButton from '@/components/tools/clear-canvas'
 import TakeScreenShotButton from '@/components/tools/take-screenshot'
 import { MobileToolSettings } from '@/components/tools/mobile-tool-settings'
