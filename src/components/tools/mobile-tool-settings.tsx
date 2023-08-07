@@ -32,15 +32,11 @@ export function MobileToolSettings() {
             </SheetTrigger>
             <SheetContent side='bottom' className="grid gap-4" showCrossIcon={false}>
                 <SheetHeader>
-                    <SheetTitle>
-                        <div className="space-y-2">
-                            <h3 className="font-medium leading-none">Canvas Settings</h3>
-                        </div>
+                    <SheetTitle className="space-y-2">
+                        <h3 className="font-medium leading-none">Canvas Settings</h3>
                     </SheetTitle>
-                    <SheetDescription>
-                        <p className="text-sm text-muted-foreground">
-                            Manage your canvas settings here.
-                        </p>
+                    <SheetDescription className="text-sm text-muted-foreground">
+                        Manage your canvas settings here.
                     </SheetDescription>
                 </SheetHeader>
                 <div className="grid gap-6 mb-2">
