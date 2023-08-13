@@ -2929,6 +2929,13 @@ util-deprecate@^1.0.2:
   resolved "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
 
+vaul@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/vaul/-/vaul-0.2.3.tgz#51433049d055d8e99f09df2c86944c0c159b7a19"
+  integrity sha512-BEMMkCAQ3ZQ3O2sgwnu7IuD3scBd7sVVr3IN57QpF1NjX+mjSaW2Rn76Dm98eEz3tXiukqRcVAiKE6F4tYwgCA==
+  dependencies:
+    "@radix-ui/react-dialog" "^1.0.4"
+
 watchpack@2.4.0:
   version "2.4.0"
   resolved "https://registry.npmjs.org/watchpack/-/watchpack-2.4.0.tgz"
