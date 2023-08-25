@@ -5,8 +5,8 @@ import { Card } from "@/components/ui/card"
 import { ToolSettings } from '@/components/tools/tool-settings'
 import ClearCanvasButton from '@/components/tools/clear-canvas'
 import TakeScreenShotButton from '@/components/tools/take-screenshot'
-import { MobileToolSettings } from '@/components/tools/mobile-tool-settings'
 import useWindowSize from '@/hooks/useWindowSize'
+import { LiveCollab } from '../tools/live-collab'
 
 export default function DrawBoardHeader() {
     const { isMobile, isDesktop } = useWindowSize();
@@ -19,8 +19,8 @@ export default function DrawBoardHeader() {
                 <div className="items-center flex gap-3">
                     <ClearCanvasButton />
                     <TakeScreenShotButton />
-                    {isDesktop && <ToolSettings />}
-                    {isMobile && <MobileToolSettings />}
+                    <LiveCollab />
+                    <ToolSettings />
                 </div>
             </div>
             <div>
