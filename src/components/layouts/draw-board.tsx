@@ -6,8 +6,6 @@ import { useCanvasStore } from "@/lib/store/canvas.store"
 import { drawLine } from "@/lib/utils"
 import React from "react"
 
-
-
 export default function DrawingBoard() {
     const { windowSize } = useWindowSize()
     const { canvasRef, onInteractStart } = useDraw(onDraw)

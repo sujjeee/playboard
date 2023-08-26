@@ -32,7 +32,7 @@ export function ToolSettings() {
                                     <SlidersHorizontal className="h-4 w-4" />
                                 </Button>
                             </PopoverTrigger>
-                            <PopoverContent className="w-80">
+                            <PopoverContent className="w-80 rounded-xl">
                                 <div className="grid gap-4">
                                     <div className="space-y-2">
                                         <h3 className="font-medium leading-none">Canvas Settings</h3>
