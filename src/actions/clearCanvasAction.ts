@@ -7,6 +7,5 @@ export default async function clearCanvasAction({
 }: {
     roomId: string
 }) {
-    console.log("room id in sevr actioncclaer data", roomId)
     pusherServer.trigger(roomId, 'clear', "clearCanvas")
 }

@@ -8,7 +8,6 @@ interface PageProps {
 
 const page = async ({ params }: PageProps) => {
     const { roomId } = params
-    console.log("room id", roomId)
     return (
         <DrawingBoard roomId={roomId} />
     )

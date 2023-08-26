@@ -18,7 +18,6 @@ export default async function sendDrawData({
     socket_id: string;
     roomId: string
 }) {
-    // console.log("room id in sevr action", roomId)
     pusherServer.trigger(roomId, 'draw', drawLineOptions, { socket_id })
     return { success: true }
 }
