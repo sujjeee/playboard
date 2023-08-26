@@ -4,12 +4,18 @@ import sendDrawData from "@/actions/sendDrawData"
 import useDraw from "@/hooks/useDraw"
 import useWindowSize from "@/hooks/useWindowSize"
 import { pusherClient } from "@/lib/pusher"
-import { useCanvasStore } from "@/lib/store/canvas.store"
+import { getRoomId, useCanvasStore } from "@/lib/store/canvas.store"
 import { drawLine } from "@/lib/utils"
 import React from "react"
 
-export default function DrawingBoard() {
+export default function DrawingBoard({ roomId }: { roomId?: string }) {
+
     const { windowSize } = useWindowSize()
+    if (roomId) {
+        const setRoomId = getRoomId(state => state.setRoomId)
+        setRoomId(roomId)
+    }
+
     const { canvasRef, onInteractStart } = useDraw(onDraw)
 
     const socket_id = pusherClient.connection.socket_id
@@ -33,7 +39,9 @@ export default function DrawingBoard() {
             color,
             newlineWidth,
         }
-        await sendDrawData({ drawLineOptions, socket_id })
+        if (roomId) {
+            await sendDrawData({ drawLineOptions, socket_id, roomId })
+        }
     }
 
     const handleInteractStart = () => {
@@ -46,28 +54,30 @@ export default function DrawingBoard() {
         const canvasElement = canvasRef.current
         const ctx = canvasElement?.getContext('2d')
 
-        pusherClient.subscribe('canvas')
+        if (roomId) {
+            pusherClient.subscribe(roomId)
 
-        pusherClient.bind('draw', (data: DrawWithColorAndWidth) => {
-            if (!ctx) {
-                console.log("ctx not available");
-                return;
-            }
+            pusherClient.bind('draw', (data: DrawWithColorAndWidth) => {
+                if (!ctx) {
+                    console.log("ctx not available");
+                    return;
+                }
 
-            const drawOptions = {
-                prevPoint: data.prevPoint,
-                currentPoint: data.currentPoint,
-                ctx: ctx,
-                color: data.color,
-                newlineWidth: data.newlineWidth
-            }
-            drawLine(drawOptions)
-        });
+                const drawOptions = {
+                    prevPoint: data.prevPoint,
+                    currentPoint: data.currentPoint,
+                    ctx: ctx,
+                    color: data.color,
+                    newlineWidth: data.newlineWidth
+                }
+                drawLine(drawOptions)
+            });
 
-        return () => {
-            pusherClient.unbind('draw');
-            pusherClient.unsubscribe('canvas');
-        };
+            return () => {
+                pusherClient.unbind('draw');
+                pusherClient.unsubscribe(roomId);
+            };
+        }
     }, [canvasRef, windowSize]);
 
     if (windowSize.height && windowSize.width !== undefined) {

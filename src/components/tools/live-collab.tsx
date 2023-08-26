@@ -35,8 +35,8 @@ export function LiveCollab() {
         try {
             setIsLoading(true)
             const roomId = nanoid()
-            setInputLink(`http://localhost:3000/#room=${roomId}`)
-            router.push(`#room=${roomId}`)
+            setInputLink(`http://localhost:3000/room/${roomId}`)
+            router.push(`room/${roomId}`)
             setIsLoading(false)
             setShowLinkDialog(true)
         } catch (error) {

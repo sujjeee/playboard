@@ -2,7 +2,9 @@ import { ThemeProvider } from '@/components/theme-provider'
 import '../styles/globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-
+import DrawBoardHeader from '@/components/layouts/draw-header'
+import { DrawBoardFooter } from '@/components/layouts/draw-footer'
+import { headers } from 'next/headers'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -15,11 +17,17 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const headersList = headers();
+  const pathname = headersList.get("x-invoke-path") || "";
   return (
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <div className="mx-auto">
+            {(pathname === '/' || pathname.startsWith('/room/')) && <DrawBoardHeader />}
+          </div>
           {children}
+          {(pathname === '/' || pathname.startsWith('/room/')) && <DrawBoardFooter />}
         </ThemeProvider>
       </body>
     </html>

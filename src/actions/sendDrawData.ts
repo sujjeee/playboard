@@ -12,10 +12,13 @@ type DrawLineOptionsProps = {
 export default async function sendDrawData({
     drawLineOptions,
     socket_id,
+    roomId
 }: {
     drawLineOptions: DrawLineOptionsProps;
     socket_id: string;
+    roomId: string
 }) {
-    pusherServer.trigger('canvas', 'draw', drawLineOptions, { socket_id })
+    // console.log("room id in sevr action", roomId)
+    pusherServer.trigger(roomId, 'draw', drawLineOptions, { socket_id })
     return { success: true }
 }
