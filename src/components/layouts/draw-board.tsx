@@ -3,36 +3,30 @@
 import useDraw from "@/hooks/useDraw"
 import useWindowSize from "@/hooks/useWindowSize"
 import { useCanvasStore } from "@/lib/store/canvas.store"
+import { drawLine } from "@/lib/utils"
 import React from "react"
+
 
 
 export default function DrawingBoard() {
     const { windowSize } = useWindowSize()
+    const { canvasRef, onInteractStart } = useDraw(onDraw)
 
-    const { canvasRef, onInteractStart } = useDraw(drawLine)
     const color = useCanvasStore(state => state.strokeColor)
 
     const newlineWidth = useCanvasStore(state => state.lineWidth)
 
-    function drawLine({ prevPoint, currentPoint, ctx }: Draw) {
-        const { x: currX, y: currY } = currentPoint
-        let startPoint = prevPoint ?? currentPoint
-
-        const lineColor = color
-        const lineWidth = newlineWidth
-
-        ctx.lineJoin = 'round'
-        ctx.lineCap = 'round'
-
-        ctx.lineWidth = lineWidth
-        ctx.strokeStyle = lineColor
-        ctx.fillStyle = lineColor
-
-        ctx.beginPath()
-        ctx.moveTo(startPoint.x, startPoint.y)
-        ctx.lineTo(currX, currY)
-        ctx.stroke()
-        ctx.fill()
+    function onDraw({ prevPoint, currentPoint, ctx }: Draw) {
+        console.log("check fun ic callinfg with callback")
+        const drawOptions = {
+            prevPoint,
+            currentPoint,
+            ctx,
+            color,
+            newlineWidth
+        }
+        console.log("checking", drawOptions)
+        drawLine(drawOptions)
     }
 
     const handleInteractStart = () => {
@@ -54,4 +48,5 @@ export default function DrawingBoard() {
             />
         )
     }
+    return null;
 }

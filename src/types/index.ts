@@ -8,3 +8,8 @@ type Point = {
     x: number;
     y: number
 }
+
+interface DrawWithColorAndWidth extends Draw {
+    color: string;
+    newlineWidth: number;
+}
