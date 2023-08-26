@@ -13,3 +13,10 @@ interface DrawWithColorAndWidth extends Draw {
     color: string;
     newlineWidth: number;
 }
+
+type DrawLineOptionsProps = {
+    prevPoint: Point | null;
+    currentPoint: Point;
+    color: string;
+    newlineWidth: number;
+};

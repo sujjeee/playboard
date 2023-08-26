@@ -9,7 +9,7 @@ interface CanvasState {
 
 export const useCanvasStore = create<CanvasState>(set => ({
     strokeColor: '#ffff00',
-    lineWidth: 5,
+    lineWidth: 4,
     setStrokeColor: (newStrokeColor) => set({ strokeColor: newStrokeColor }),
     setLineWidth: (newLineWidth) => set({ lineWidth: newLineWidth })
 }))
