@@ -86,9 +86,14 @@ export function LiveCollab() {
                                 </DialogDescription>
                             </DialogHeader>
                             {/* todo : <Input placeholder="Enter your name" /> */}
-                            <Input value={inputLink} readOnly />
+                            <Input value={inputLink} readOnly className="text-muted-foreground" />
                             <div className="flex gap-3 w-full justify-between items-center">
-                                <Button variant="destructive" className="w-full ">
+                                <Button
+                                    variant="destructive"
+                                    className="w-full"
+                                    onClick={() => router.push('/')
+                                    }
+                                >
                                     <Square className="mr-2 h-4 w-4" />
                                     stop session
                                 </Button>
