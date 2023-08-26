@@ -3,9 +3,11 @@
 import sendDrawData from "@/actions/sendDrawData"
 import useDraw from "@/hooks/useDraw"
 import useWindowSize from "@/hooks/useWindowSize"
+
 import { pusherClient } from "@/lib/pusher"
 import { getRoomId, useCanvasStore } from "@/lib/store/canvas.store"
 import { drawLine } from "@/lib/utils"
+
 import React from "react"
 
 export default function DrawingBoard({ roomId }: { roomId?: string }) {
@@ -43,6 +45,7 @@ export default function DrawingBoard({ roomId }: { roomId?: string }) {
         if (roomId) {
             await sendDrawData({ drawLineOptions, socket_id, roomId })
         }
+
     }
 
     const handleInteractStart = () => {
