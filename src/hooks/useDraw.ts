@@ -6,80 +6,66 @@ export default function useDraw(onDraw: ({ ctx, currentPoint, prevPoint }: Draw)
 
     const [isDrawing, setIsDrawing] = React.useState(false);
 
-    const canvas = canvasRef.current;
-
-    function onInteractStart() {
-        setIsDrawing(true);
-    }
-  
-    const computePointInCanvas = (e: MouseEvent | TouchEvent) => {
-        if (!canvas) return;
-
-        const rect = canvas.getBoundingClientRect();
-        const x = e instanceof MouseEvent ? e.clientX - rect.left : e.touches[0].clientX - rect.left;
-        const y = e instanceof MouseEvent ? e.clientY - rect.top : e.touches[0].clientY - rect.top;
-
-        return { x, y };
-    };
-
-    const startDrawing = React.useCallback((e: MouseEvent | TouchEvent) => {
-        if (!isDrawing) return;
-
-        const ctx = canvas?.getContext('2d');
-        const currentPoint = computePointInCanvas(e);
-
-        if (!ctx || !currentPoint) return;
-
-        onDraw({ ctx, currentPoint, prevPoint: prevPoint.current });
-        prevPoint.current = currentPoint;
+    const onInteractStart = React.useCallback(() => {
+        setIsDrawing(true)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDrawing, onDraw, canvas]);
-
-    const stopDrawing = React.useCallback(() => {
-        setIsDrawing(false);
-        prevPoint.current = null;
-    }, []);
-
-
-    React.useEffect(() => {
-        window.addEventListener('mouseup', stopDrawing);
-        canvas?.addEventListener('mousemove', startDrawing);
-        window.addEventListener('mousedown', startDrawing);
-      
-        return () => {
-            window.removeEventListener('mouseup', stopDrawing);
-            canvas?.removeEventListener('mousemove', startDrawing);
-            window.removeEventListener('mousedown', startDrawing);
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [startDrawing, stopDrawing]);
-
+    }, [])
 
     const onTouchStart = React.useCallback((event: TouchEvent) => {
         event.preventDefault();
         setIsDrawing(true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const onTouchMove = React.useCallback((event: TouchEvent) => {
-        startDrawing(event);
-    }, [startDrawing]);
-
-    const onTouchEnd = React.useCallback(() => {
-        stopDrawing();
-    }, [stopDrawing]);
-
     React.useEffect(() => {
-        canvas?.addEventListener('touchmove', onTouchMove, { passive: false });
-        canvas?.addEventListener('touchend', onTouchEnd);
+        const canvas = canvasRef.current
+
+        function startDrawing(e: MouseEvent | TouchEvent) {
+            if (!isDrawing) return;
+            const canvasElement = canvasRef.current
+            const ctx = canvasElement?.getContext('2d');
+            const currentPoint = computePointInCanvas(e);
+
+            if (!ctx || !currentPoint) return;
+
+            onDraw({ ctx, currentPoint, prevPoint: prevPoint.current });
+            prevPoint.current = currentPoint;
+        }
+
+        const computePointInCanvas = (e: MouseEvent | TouchEvent) => {
+            const canvasElement = canvasRef.current
+            if (!canvasElement) return;
+
+            const rect = canvasElement.getBoundingClientRect();
+            const x = e instanceof MouseEvent ? e.clientX - rect.left : e.touches[0].clientX - rect.left;
+            const y = e instanceof MouseEvent ? e.clientY - rect.top : e.touches[0].clientY - rect.top;
+
+            return { x, y };
+        };
+
+        function stopDrawing() {
+            setIsDrawing(false);
+            prevPoint.current = null;
+        }
+
+        window.addEventListener('mouseup', stopDrawing);
+        canvas?.addEventListener('mousemove', startDrawing);
+        window.addEventListener('mousedown', startDrawing);
+
+        canvas?.addEventListener('touchmove', startDrawing, { passive: false });
+        canvas?.addEventListener('touchend', stopDrawing);
         canvas?.addEventListener('touchstart', onTouchStart, { passive: false });
 
         return () => {
-            canvas?.removeEventListener('touchmove', onTouchMove);
-            canvas?.removeEventListener('touchend', onTouchEnd);
+            window.removeEventListener('mouseup', stopDrawing);
+            canvas?.removeEventListener('mousemove', startDrawing);
+            window.removeEventListener('mousedown', startDrawing);
+
+            canvas?.removeEventListener('touchmove', startDrawing);
+            canvas?.removeEventListener('touchend', stopDrawing);
             canvas?.removeEventListener('touchstart', onTouchStart);
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [onTouchMove, onTouchEnd, onTouchStart]);
+    }, [isDrawing, onDraw]);
 
     return { canvasRef, onInteractStart };
 }
