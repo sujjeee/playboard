@@ -35,7 +35,7 @@ export function LiveCollab() {
         try {
             setIsLoading(true)
             const roomId = nanoid()
-            setInputLink(`http://localhost:3000/room/${roomId}`)
+            etInputLink(`https://playboard.vercel.app/room/${roomId}`)
             router.push(`room/${roomId}`)
             setIsLoading(false)
             setShowLinkDialog(true)
