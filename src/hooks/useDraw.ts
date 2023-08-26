@@ -11,7 +11,7 @@ export default function useDraw(onDraw: ({ ctx, currentPoint, prevPoint }: Draw)
     function onInteractStart() {
         setIsDrawing(true);
     }
-
+  
     const computePointInCanvas = (e: MouseEvent | TouchEvent) => {
         if (!canvas) return;
 
@@ -45,7 +45,7 @@ export default function useDraw(onDraw: ({ ctx, currentPoint, prevPoint }: Draw)
         window.addEventListener('mouseup', stopDrawing);
         canvas?.addEventListener('mousemove', startDrawing);
         window.addEventListener('mousedown', startDrawing);
-
+      
         return () => {
             window.removeEventListener('mouseup', stopDrawing);
             canvas?.removeEventListener('mousemove', startDrawing);

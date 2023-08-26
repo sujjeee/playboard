@@ -14,7 +14,6 @@ export const useCanvasStore = create<CanvasState>(set => ({
     setLineWidth: (newLineWidth) => set({ lineWidth: newLineWidth })
 }))
 
-
 interface RoomIdState {
     roomId: string
     setRoomId: (strokeColor: string) => void
