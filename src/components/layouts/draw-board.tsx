@@ -6,15 +6,12 @@ import useWindowSize from "@/hooks/useWindowSize"
 import { pusherClient } from "@/lib/pusher"
 import { getRoomId, useCanvasStore } from "@/lib/store/canvas.store"
 import { drawLine } from "@/lib/utils"
-import React from "react"
+import React, { useEffect } from "react"
 
 export default function DrawingBoard({ roomId }: { roomId?: string }) {
 
     const { windowSize } = useWindowSize()
-    if (roomId) {
-        const setRoomId = getRoomId(state => state.setRoomId)
-        setRoomId(roomId)
-    }
+    const setRoomId = getRoomId(state => state.setRoomId)
 
     const { canvasRef, onInteractStart } = useDraw(onDraw)
 
@@ -55,6 +52,7 @@ export default function DrawingBoard({ roomId }: { roomId?: string }) {
         const ctx = canvasElement?.getContext('2d')
 
         if (roomId) {
+            setRoomId(roomId)
             pusherClient.subscribe(roomId)
 
             pusherClient.bind('draw', (data: DrawWithColorAndWidth) => {
@@ -78,7 +76,7 @@ export default function DrawingBoard({ roomId }: { roomId?: string }) {
                 pusherClient.unsubscribe(roomId);
             };
         }
-    }, [canvasRef, windowSize]);
+    }, [canvasRef, windowSize, roomId]);
 
     if (windowSize.height && windowSize.width !== undefined) {
         return (
