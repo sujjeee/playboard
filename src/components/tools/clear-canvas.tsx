@@ -18,11 +18,14 @@ export default function ClearCanvasButton() {
         const ctx = canvasRef.current.getContext('2d');
         if (!ctx) return;
         ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-
-        if (roomId) {
-            clearCanvasAction({ roomId });
-        }
     };
+
+    function handleClearButton() {
+        clearCanvas()
+        if (roomId) {
+            clearCanvasAction({ roomId })
+        }
+    }
 
     React.useEffect(() => {
         const canvasElement = document.getElementById('canvas') as HTMLCanvasElement;
@@ -39,15 +42,15 @@ export default function ClearCanvasButton() {
             pusherClient.bind('clear', handleClear);
 
             return () => {
-                pusherClient.unbind('clear');
+                pusherClient.unbind('clear', handleClear);
                 pusherClient.unsubscribe(roomId);
             };
         }
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [roomId]);
 
     return (
-        <Button variant="outline" size="icon" onClick={clearCanvas}>
+        <Button variant="outline" size="icon" onClick={handleClearButton}>
             <Eraser className="h-4 w-4" />
         </Button>
     );

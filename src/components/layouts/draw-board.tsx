@@ -6,18 +6,23 @@ import useWindowSize from "@/hooks/useWindowSize"
 import { pusherClient } from "@/lib/pusher"
 import { getRoomId, useCanvasStore } from "@/lib/store/canvas.store"
 import { drawLine } from "@/lib/utils"
-import React, { useEffect } from "react"
+import React from "react"
 
 export default function DrawingBoard({ roomId }: { roomId?: string }) {
-
     const { windowSize } = useWindowSize()
-    const setRoomId = getRoomId(state => state.setRoomId)
 
-    const { canvasRef, onInteractStart } = useDraw(onDraw)
+    // Get color and newlineWidth from custom store hooks
+    const color = useCanvasStore((state) => state.strokeColor);
+    const newlineWidth = useCanvasStore((state) => state.lineWidth);
+
+
+    // Set the room ID in the state using a custom store hook
+    const setRoomId = getRoomId((state) => state.setRoomId);
+
+    // Get canvasRef and onInteractStart from the useDraw custom hook
+    const { canvasRef, onInteractStart } = useDraw(onDraw);
 
     const socket_id = pusherClient.connection.socket_id
-    const color = useCanvasStore(state => state.strokeColor)
-    const newlineWidth = useCanvasStore(state => state.lineWidth)
 
     async function onDraw({ prevPoint, currentPoint, ctx }: Draw) {
         const drawOptions = {
@@ -27,7 +32,6 @@ export default function DrawingBoard({ roomId }: { roomId?: string }) {
             color,
             newlineWidth
         }
-
         drawLine(drawOptions)
 
         const drawLineOptions = {
@@ -48,34 +52,39 @@ export default function DrawingBoard({ roomId }: { roomId?: string }) {
     }
 
     React.useEffect(() => {
-        const canvasElement = canvasRef.current
-        const ctx = canvasElement?.getContext('2d')
-
         if (roomId) {
-            setRoomId(roomId)
-            pusherClient.subscribe(roomId)
+            const canvasElement = canvasRef.current;
+            const ctx = canvasElement?.getContext('2d');
 
-            pusherClient.bind('draw', (data: DrawWithColorAndWidth) => {
-                if (!ctx) {
-                    console.log("ctx not available");
-                    return;
-                }
+            const setupPusherListeners = () => {
+                setRoomId(roomId);
+                pusherClient.subscribe(roomId);
 
-                const drawOptions = {
-                    prevPoint: data.prevPoint,
-                    currentPoint: data.currentPoint,
-                    ctx: ctx,
-                    color: data.color,
-                    newlineWidth: data.newlineWidth
-                }
-                drawLine(drawOptions)
-            });
+                pusherClient.bind('draw', (data: DrawWithColorAndWidth) => {
+                    if (!ctx) {
+                        console.log("ctx not available");
+                        return;
+                    }
+
+                    const drawOptions = {
+                        prevPoint: data.prevPoint,
+                        currentPoint: data.currentPoint,
+                        ctx: ctx,
+                        color: data.color,
+                        newlineWidth: data.newlineWidth
+                    }
+                    drawLine(drawOptions);
+                });
+            };
+
+            setupPusherListeners();
 
             return () => {
                 pusherClient.unbind('draw');
                 pusherClient.unsubscribe(roomId);
             };
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [canvasRef, windowSize, roomId]);
 
     if (windowSize.height && windowSize.width !== undefined) {
