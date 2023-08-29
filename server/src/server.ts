@@ -12,7 +12,7 @@ app.use(express.json());
 
 const productionUrl = process.env.PRODUCTION_URL;
 
-const allowedOrigins = productionUrl ? ['http://localhost:3000', productionUrl] : ['http://localhost:3000'];
+const allowedOrigins = productionUrl ? [productionUrl] : ['http://localhost:3000'];
 
 const options: cors.CorsOptions = {
     origin: allowedOrigins

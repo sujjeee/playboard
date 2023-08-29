@@ -9,7 +9,9 @@ import axios from 'axios'
 import { useRouter } from "next/navigation"
 import { io } from 'socket.io-client'
 
-const hostServer = process.env.NEXT_PUBLIC_HOSTED_SERVER;
+const productionServer = process.env.NEXT_PUBLIC_HOSTED_SERVER;
+const hostServer = productionServer ? [productionServer] : ['http://localhost:3001'];
+
 const socket = io(`${hostServer}`)
 
 export default function DrawingBoard({ roomId }: { roomId?: string }) {
@@ -26,8 +28,6 @@ export default function DrawingBoard({ roomId }: { roomId?: string }) {
 
     // Get canvasRef and onInteractStart from the useDraw custom hook
     const { canvasRef, onInteractStart } = useDraw(onDraw);
-    const [isRoomActive, setIsRoomActive] = React.useState<boolean>(false)
-
 
     function onDraw({ prevPoint, currentPoint, ctx }: Draw) {
         const drawOptions = {
