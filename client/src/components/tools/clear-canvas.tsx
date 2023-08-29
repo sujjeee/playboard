@@ -6,7 +6,9 @@ import useWindowSize from '@/hooks/useWindowSize'
 import { Button } from '@/components/ui/button'
 import { getRoomId } from '@/lib/store/canvas.store'
 import { io } from 'socket.io-client'
-const socket = io('http://localhost:3001')
+
+const hostServer = process.env.NEXT_PUBLIC_HOSTED_SERVER;
+const socket = io(`${hostServer}`)
 
 export default function ClearCanvasButton() {
     const { windowSize } = useWindowSize();
