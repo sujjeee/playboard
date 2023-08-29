@@ -11,8 +11,9 @@ import { io } from 'socket.io-client'
 import { useRouter } from "next/navigation"
 
 // import NotFound from "@/app/room/[roomId]/[...not-found]/not-found"
+const hostServer = process.env.NEXT_PUBLIC_HOSTED_SERVER;
 
-const socket = io('http://localhost:3001')
+const socket = io(`${hostServer}`)
 
 export default function DrawingBoard({ roomId }: { roomId?: string }) {
 
@@ -56,7 +57,6 @@ export default function DrawingBoard({ roomId }: { roomId?: string }) {
 
     React.useEffect(() => {
         if (!roomId) return;
-        const hostServer = process.env.NEXT_PUBLIC_HOSTED_SERVER;
 
         async function checkRoomId({ roomId }: { roomId: string }) {
             try {
