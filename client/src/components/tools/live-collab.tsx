@@ -15,14 +15,18 @@ import { Loader2, Radio, Square } from "lucide-react"
 import React from "react"
 import { nanoid } from 'nanoid'
 import { useRouter } from "next/navigation"
+import axios from "axios"
 
 export function LiveCollab() {
     const router = useRouter()
 
-    const [inputLink, setInputLink] = React.useState<string>("hellow oles")
+    const hostServer = process.env.NEXT_PUBLIC_HOSTED_SERVER;
+
+    const [inputLink, setInputLink] = React.useState<string>("")
     const [showLinkDialog, setShowLinkDialog] = React.useState<boolean>(false)
     const [hasCopied, setHasCopied] = React.useState<boolean>(false)
     const [isLoading, setIsLoading] = React.useState<boolean>(false)
+    const [inputValue, setInputValue] = React.useState<string>('');
 
     const copyToClipboard = React.useCallback(() => {
         if (inputLink) {
@@ -31,11 +35,24 @@ export function LiveCollab() {
         }
     }, [inputLink]);
 
-    const startSession = () => {
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setInputValue(event.target.value);
+    };
+
+    const startSession = async () => {
         try {
             setIsLoading(true)
+            const trimmedValue = inputValue.trim();
+
+            if (trimmedValue === '') {
+                setIsLoading(false)
+                return;
+            }
             const roomId = nanoid()
-            setInputLink(`https://playboard.vercel.app/room/${roomId}`)
+            const response = await axios.post(`${hostServer}/add-room`, { roomId });
+            if (response)
+                setInputLink(`https://playboard.vercel.app/room/${roomId}`)
             router.push(`room/${roomId}`)
             setIsLoading(false)
             setShowLinkDialog(true)
@@ -64,6 +81,12 @@ export function LiveCollab() {
                                     You can invite people to your current scene to collaborate with you.
                                 </DialogDescription>
                             </DialogHeader>
+                            <Input
+                                placeholder="Enter your name"
+                                value={inputValue}
+                                onChange={handleInputChange}
+                                required
+                            />
                             <DialogFooter>
                                 <Button className="w-full" onClick={startSession}>
                                     {isLoading ? (
@@ -85,7 +108,6 @@ export function LiveCollab() {
                                     Anyone with the link can view this playboard.
                                 </DialogDescription>
                             </DialogHeader>
-                            {/* todo : <Input placeholder="Enter your name" /> */}
                             <Input value={inputLink} readOnly className="text-muted-foreground" />
                             <div className="flex gap-3 w-full justify-between items-center">
                                 <Button

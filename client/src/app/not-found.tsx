@@ -9,10 +9,9 @@ export default function NotFound() {
                 <h1 className="font-black text-muted-foreground text-9xl">404</h1>
                 <p className="mt-4 text-gray-500">We can&apos;t find that page.</p>
                 <Button asChild className='mt-3'>
-                    <Link href="/login">Back to PlayBoard</Link>
+                    <Link href="/">Back to PlayBoard</Link>
                 </Button>
             </div>
         </div>
-
     )
 }
