@@ -1,0 +1,14 @@
+{
+  "name": "playboard",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/sujjeee/playboard.git",
+  "author": "sujjeee",
+  "license": "MIT",
+  "scripts": {
+    "dev": "concurrently \"cd server && yarn dev\" \"cd client && yarn dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.1"
+  }
+}
