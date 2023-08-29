@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 import express, { Express, Request, Response } from 'express';
 import http from 'http'
 const app: Express = express()
@@ -8,8 +10,9 @@ import { activeRooms, addActiveRoom, removeExpiredRooms } from './data/activeRoo
 
 app.use(express.json());
 
-// todo:cors set
-const allowedOrigins = ['http://localhost:3000'];
+const productionUrl = process.env.PRODUCTION_URL;
+
+const allowedOrigins = productionUrl ? ['http://localhost:3000', productionUrl] : ['http://localhost:3000'];
 
 const options: cors.CorsOptions = {
     origin: allowedOrigins
