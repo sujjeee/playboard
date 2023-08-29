@@ -4,15 +4,14 @@ import React from 'react'
 import { Eraser } from 'lucide-react'
 import useWindowSize from '@/hooks/useWindowSize'
 import { Button } from '@/components/ui/button'
-import { pusherClient } from '@/lib/pusher'
 import { getRoomId } from '@/lib/store/canvas.store'
-import clearCanvasAction from '@/actions/clearCanvasAction'
+import { io } from 'socket.io-client'
+const socket = io('http://localhost:3001')
 
 export default function ClearCanvasButton() {
     const { windowSize } = useWindowSize();
     const canvasRef = React.useRef<HTMLCanvasElement>();
     const roomId = getRoomId(state => state.roomId);
-
     const clearCanvas = () => {
         if (!canvasRef.current) return;
         const ctx = canvasRef.current.getContext('2d');
@@ -23,7 +22,7 @@ export default function ClearCanvasButton() {
     function handleClearButton() {
         clearCanvas()
         if (roomId) {
-            clearCanvasAction({ roomId })
+            socket.emit('calling-clear-canvas', { roomId });
         }
     }
 
@@ -38,14 +37,12 @@ export default function ClearCanvasButton() {
         };
 
         if (roomId) {
-            pusherClient.subscribe(roomId);
-            pusherClient.bind('clear', handleClear);
-
-            return () => {
-                pusherClient.unbind('clear', handleClear);
-                pusherClient.unsubscribe(roomId);
-            };
+            socket.emit('join-room', roomId)
+            socket.on('clear-canvas', handleClear)
         }
+        return () => {
+            socket.off('clear-canvas');
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [roomId]);
 
