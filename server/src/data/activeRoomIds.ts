@@ -13,7 +13,9 @@ let activeRooms: ActiveRoom[] = [];
 function loadActiveRooms() {
     try {
         const data = fs.readFileSync(activeRoomsFilePath, 'utf-8');
-        activeRooms = JSON.parse(data);
+        if (data) {
+            activeRooms = JSON.parse(data);
+        }
     } catch (error) {
         // Handle error
         console.error('Error loading active rooms data:', error);
@@ -48,4 +50,4 @@ loadActiveRooms();
 // todo fix time 
 setInterval(removeExpiredRooms, 360000);
 
-export { ActiveRoom, activeRooms, addActiveRoom, removeExpiredRooms };
+export { activeRooms, addActiveRoom, removeExpiredRooms };

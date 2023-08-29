@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation"
 import { io } from 'socket.io-client'
 
 const productionServer = process.env.NEXT_PUBLIC_HOSTED_SERVER;
-const hostServer = productionServer ? [productionServer] : ['http://localhost:3001'];
+const hostServer = productionServer != undefined ? [productionServer] : ['http://localhost:3001'];
 
 const socket = io(`${hostServer}`)
 

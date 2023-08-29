@@ -1,43 +1,25 @@
-require('dotenv').config()
-
 import express, { Express, Request, Response } from 'express';
 import http from 'http'
 const app: Express = express()
 const server = http.createServer(app)
 import cors from 'cors'
 import { Server } from 'socket.io'
+import type { DrawLineOptionsProps } from '@/types'
 import { activeRooms, addActiveRoom, removeExpiredRooms } from './data/activeRoomIds';
 
 app.use(express.json());
 
-const productionUrl = process.env.PRODUCTION_URL;
-
-const allowedOrigins = productionUrl ? [productionUrl] : ['http://localhost:3000'];
-
 const options: cors.CorsOptions = {
-    origin: allowedOrigins
+    origin: ['http://localhost:3000', 'https://playboard.vercel.app']
 };
 
 app.use(cors(options));
 
-// todo cors set 
 const io = new Server(server, {
     cors: {
         origin: '*',
     },
 })
-
-type Point = {
-    x: number;
-    y: number
-}
-
-type DrawLineOptionsProps = {
-    prevPoint: Point | null;
-    currentPoint: Point;
-    color: string;
-    newlineWidth: number;
-};
 
 io.on('connection', (socket) => {
 

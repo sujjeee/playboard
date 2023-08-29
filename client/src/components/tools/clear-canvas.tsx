@@ -7,7 +7,8 @@ import { Button } from '@/components/ui/button'
 import { getRoomId } from '@/lib/store/canvas.store'
 import { io } from 'socket.io-client'
 
-const hostServer = process.env.NEXT_PUBLIC_HOSTED_SERVER;
+const productionServer = process.env.NEXT_PUBLIC_HOSTED_SERVER;
+const hostServer = productionServer != undefined ? [productionServer] : ['http://localhost:3001'];
 const socket = io(`${hostServer}`)
 
 export default function ClearCanvasButton() {

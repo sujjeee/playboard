@@ -9,20 +9,14 @@ type Point = {
     y: number
 }
 
-interface DrawWithColorAndWidth extends Draw {
+export interface DrawWithColorAndWidth extends Draw {
     color: string;
     newlineWidth: number;
 }
 
-type DrawLineOptionsProps = {
+export type DrawLineOptionsProps = {
     prevPoint: Point | null;
     currentPoint: Point;
     color: string;
     newlineWidth: number;
 };
-
-export interface User {
-    id: string
-    username: string
-    roomId: string
-}
