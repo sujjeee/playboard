@@ -17,10 +17,11 @@ import { nanoid } from 'nanoid'
 import { useRouter } from "next/navigation"
 import axios from "axios"
 
+const productionServer = process.env.NEXT_PUBLIC_HOSTED_SERVER;
+const hostServer = productionServer != undefined ? [productionServer] : ['http://localhost:3001'];
+
 export function LiveCollab() {
     const router = useRouter()
-
-    const hostServer = process.env.NEXT_PUBLIC_HOSTED_SERVER;
 
     const [inputLink, setInputLink] = React.useState<string>("")
     const [showLinkDialog, setShowLinkDialog] = React.useState<boolean>(false)
@@ -51,9 +52,10 @@ export function LiveCollab() {
             }
             const roomId = nanoid()
             const response = await axios.post(`${hostServer}/add-room`, { roomId });
-            if (response)
+            if (response) {
                 setInputLink(`https://playboard.vercel.app/room/${roomId}`)
-            router.push(`room/${roomId}`)
+                router.push(`room/${roomId}`)
+            }
             setIsLoading(false)
             setShowLinkDialog(true)
         } catch (error) {
@@ -77,7 +79,7 @@ export function LiveCollab() {
                                     <Radio className="mr-2 h-4 w-4" />
                                     Live collaboration...
                                 </DialogTitle>
-                                <DialogDescription>
+                                <DialogDescription className="text-left">
                                     You can invite people to your current scene to collaborate with you.
                                 </DialogDescription>
                             </DialogHeader>
@@ -104,7 +106,7 @@ export function LiveCollab() {
                         <DialogContent className="sm:max-w-[425px]">
                             <DialogHeader>
                                 <DialogTitle>Share this playborad</DialogTitle>
-                                <DialogDescription>
+                                <DialogDescription className="text-left">
                                     Anyone with the link can view this playboard.
                                 </DialogDescription>
                             </DialogHeader>
