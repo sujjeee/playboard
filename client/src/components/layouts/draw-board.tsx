@@ -41,15 +41,16 @@ export default function DrawingBoard({ roomId }: { roomId?: string }) {
         }
         drawLine(drawOptions)
 
-        const roomDrawLineOptions = {
-            prevPoint: prevPoint,
-            currentPoint: currentPoint,
-            color: color,
-            newlineWidth: newlineWidth,
-        };
-
-        // Emit the "draw" event with the specified data
-        socket.emit('start-draw', { roomDrawLineOptions, roomId });
+        if (roomId) {
+            const roomDrawLineOptions = {
+                prevPoint: prevPoint,
+                currentPoint: currentPoint,
+                color: color,
+                newlineWidth: newlineWidth,
+            };
+            // Emit the "draw" event with the specified data
+            socket.emit('start-draw', { roomDrawLineOptions, roomId });
+        }
 
     }
 
