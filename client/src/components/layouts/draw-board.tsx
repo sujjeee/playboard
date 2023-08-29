@@ -6,13 +6,10 @@ import useWindowSize from "@/hooks/useWindowSize"
 import { getRoomId, useCanvasStore } from "@/lib/store/canvas.store"
 import { drawLine } from "@/lib/utils"
 import axios from 'axios'
-
-import { io } from 'socket.io-client'
 import { useRouter } from "next/navigation"
+import { io } from 'socket.io-client'
 
-// import NotFound from "@/app/room/[roomId]/[...not-found]/not-found"
 const hostServer = process.env.NEXT_PUBLIC_HOSTED_SERVER;
-
 const socket = io(`${hostServer}`)
 
 export default function DrawingBoard({ roomId }: { roomId?: string }) {

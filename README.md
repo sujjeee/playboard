@@ -39,3 +39,18 @@ yarn dev
 ```
 
 You can now play around with it.
+
+
+## Environment Variables 🌎
+To run this project, you will need to add the following environment variables to your .env file:
+
+For client:
+
+```
+NEXT_PUBLIC_HOSTED_SERVER= {hosted server url}
+```
+
+For server:
+```
+PRODUCTION_URL = {hosted server url}
+```
