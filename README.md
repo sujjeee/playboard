@@ -49,8 +49,3 @@ For client:
 ```
 NEXT_PUBLIC_HOSTED_SERVER= {hosted server url}
 ```
-
-For server:
-```
-PRODUCTION_URL = {hosted server url}
-```
